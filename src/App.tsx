@@ -133,15 +133,15 @@ const LEXICON = [
 const LEXSET = new Set(LEXICON.map(norm));
 
 const SCENARIOS: Scenario[] = [
-  { id: "how-are-you",   prompt: "How are you, Dad?",            suggestions: ["Good","Fine"] },
-  { id: "pain-check",    prompt: "Are you in pain?",             suggestions: ["No","Yes"] },
-  { id: "call-now",      prompt: "Can I call you now?",          suggestions: ["Yes","No"] },
-  { id: "groceries",     prompt: "Need anything from the shop?", suggestions: ["No","Hungry"] },
-  { id: "tired-check",   prompt: "Are you tired?",               suggestions: ["Tired","Fine"] },
-  { id: "visit-time",    prompt: "Can I come now?",              suggestions: ["Now","Later"] },
-  { id: "where-are-you", prompt: "Are you at home?",             suggestions: ["Home","Later"] },
-  { id: "go-out",        prompt: "Shall we go out today?",       suggestions: ["Yes","No"] },
-  { id: "shirt-choice",  prompt: "Red shirt okay?",              suggestions: ["Ok","No"] },
+  { id: "how-are-you",   prompt: "How are you, Dad?",            suggestions: ["Good","Fine","Maybe"] },
+  { id: "pain-check",    prompt: "Are you in pain?",             suggestions: ["No","Maybe","Yes"] },
+  { id: "call-now",      prompt: "Can I call you now?",          suggestions: ["Yes","Maybe","No"] },
+  { id: "groceries",     prompt: "Need anything from the shop?", suggestions: ["No","Maybe","Hungry"] },
+  { id: "tired-check",   prompt: "Are you tired?",               suggestions: ["Tired","Maybe","Fine"] },
+  { id: "visit-time",    prompt: "Can I come now?",              suggestions: ["Now","Maybe","Later"] },
+  { id: "where-are-you", prompt: "Are you at home?",             suggestions: ["Home","Maybe","Later"] },
+  { id: "go-out",        prompt: "Shall we go out today?",       suggestions: ["Yes","Maybe","No"] },
+  { id: "shirt-choice",  prompt: "Red shirt okay?",              suggestions: ["Ok","Maybe","No"] },
   { id: "thanks-prompt", prompt: "Thanks for today ❤️",          suggestions: ["Thanks","Love","Bye"] },
 ];
 
@@ -552,7 +552,8 @@ function SelfTestPanel() {
 export default function App() {
   const [mode, setMode] = useState<"copy" | "listen" | "roleplay">("copy");
   const [guidesOn, setGuidesOn] = useState(true); // auto-disabled in roleplay
-  const [holdMs] = useState(2000);
+  const holdMs = 2000; // <— use this variable everywhere
+
   useEffect(() => { if (mode === "roleplay") setGuidesOn(false); }, [mode]);
 
   const container: React.CSSProperties = { minHeight: "100dvh", background: "#fff", color: "#111827", fontFamily: "Inter, system-ui, Segoe UI, Roboto, Arial, sans-serif" };
@@ -579,13 +580,13 @@ export default function App() {
 
       <main style={{ maxWidth: 880, margin: "0 auto", padding: "24px 16px" }}>
         {mode === "copy" && (
-          <PracticeScreen mode="copy" words={WORDS} guidesOn={guidesOn} holdMs={2000} />
+          <PracticeScreen mode="copy" words={WORDS} guidesOn={guidesOn} holdMs={holdMs} />
         )}
         {mode === "listen" && (
-          <PracticeScreen mode="listen" words={WORDS} guidesOn={guidesOn} holdMs={2000} />
+          <PracticeScreen mode="listen" words={WORDS} guidesOn={guidesOn} holdMs={holdMs} />
         )}
         {mode === "roleplay" && (
-          <RoleplayScreen holdMs={2000} />
+          <RoleplayScreen holdMs={holdMs} />
         )}
       </main>
 
